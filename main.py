@@ -27,7 +27,8 @@ def report():
             db[word] = jobs
     else:
         return redirect("/")
-    return render_template("report.html", searchingBy=word, resultNumber=len(jobs))
+    return render_template(
+        "report.html", searchingBy=word, resultNumber=len(jobs), jobs=jobs)
 
 
 app.run(host="0.0.0.0")
