@@ -12,7 +12,7 @@ def home():
 def report():
     # print(request.args)
     word = request.args.get("word")
-    return f"this is the report {word}"
+    return render_template("report.html", searchingBy=word)
 
 
 app.run(host="0.0.0.0")
