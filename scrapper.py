@@ -48,11 +48,14 @@ def extract_job(page_url, job_html):
 
     # COMPANY
     company = job_html.find("span", {"class": "company"})
-    company_anchor = company.find("a")
-    if company_anchor != None:
-        company = (company_anchor.string).strip()
+    if company == None:
+        company = "None"
     else:
-        company = (company.string).strip()
+        company_anchor = company.find("a")
+        if company_anchor != None:
+            company = (company_anchor.string).strip()
+        else:
+            company = (company.string).strip()
 
     # LOCATION
     location = job_html.find("div", {"class": "recJobLoc"})["data-rc-loc"]
