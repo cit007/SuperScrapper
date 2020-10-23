@@ -1,6 +1,7 @@
-from flask import Flask, render_template, request, redirect, send_file
+from flask import Flask, render_template, request, redirect, send_file, send_from_directory
 from scrapper import get_jobs
 from exporter import save_to_file
+import os
 
 app = Flask("SuperScrapper")
 
@@ -9,7 +10,7 @@ db = {}
 
 @app.route("/")
 def home():
-    return render_template("potato.html")
+    return render_template("index.html")
 
 
 @app.route("/report")
@@ -38,17 +39,28 @@ def export():
         word = request.args.get("word")
         print(word)
         if not word:
+            print(f"not exist word: {word}")
             raise Exception()
 
         word = word.lower()
         jobs = db.get(word)
         if not jobs:
+            print("##### NOT EXIST JOB INFO FOR EXPORT #####")
             raise Exception()
         else:
-            save_to_file(jobs)
-            return send_file("jobs.csv")
+            filename = f"{word}.csv"
+            filepath = f"export"
+            file_full_path = os.path.join(filepath, filename)
+
+            # save file
+            save_to_file(file_full_path, jobs)
+
+            print(file_full_path)
+            return send_file(file_full_path, as_attachment=True)
+            # return send_from_directory(filepath, filename, as_attachment=True)
 
     except:
+        print("##### EXPORT EXCEPTION #####")
         return redirect("/")
 
 

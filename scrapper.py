@@ -38,7 +38,8 @@ def extract_indeed_jobs(url, last_page):
             job_info = extract_job(page_url, job)
             # print(job_info)
             jobs_list.append(job_info)
-
+            break  # ---------------------------
+        break  # ---------------------------
     return jobs_list
 
 
@@ -53,9 +54,9 @@ def extract_job(page_url, job_html):
     else:
         company_anchor = company.find("a")
         if company_anchor != None:
-            company = (company_anchor.string).strip()
+            company = (company_anchor.getText()).strip()
         else:
-            company = (company.string).strip()
+            company = (company.getText()).strip()
 
     # LOCATION
     location = job_html.find("div", {"class": "recJobLoc"})["data-rc-loc"]
