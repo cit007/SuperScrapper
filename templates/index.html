@@ -1,15 +1,26 @@
 <!DOCTYPE html>
 <html>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Search</title>
+
+    <link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/custom_style.css') }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Job Search</title>
 </head>
+
 <body>
-    <form action="/report" method="get">
+    <div class="center vertical-center">
         <h1>Job Search</h1>
-        <input placeholder='What job do you want?' required name="word" />
-        <button>Search</button>
-    </form> 
+        <div>
+            <form class="searchTerm" action="/report" method="get" style="margin:auto;max-width:300px">
+                <input placeholder='Job Search...' required name="word" />
+                <button><i class="fa fa-search"></i></button>
+            </form> 
+        </div>
+    </div>
+    <img src="./static/images/bg.jpg" class="bgImage" />
 </body>
 </html>

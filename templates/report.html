@@ -5,29 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Job Search</title>
 
-    <style>
-        section {
-            display: grid;
-            gap: 20px;
-            grid-template-columns: repeat(4, 1fr);
-        }
-    </style>
+    <link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/custom_style.css') }}">
 </head>
 <body>
-    <a href="/"><h1>Search Results</h1></a>
-    <h3>Found {{resultNumber}} results for : {{searchingBy}}</h3> 
-    <a href="/export?word={{searchingBy}}">Export to CSV</a>
+    <div class="center">
+        <h2>Job Results</h2>
+        <div>
+            <h3>Found <strong>{{resultNumber}}</strong> results from indeed.com | Search Word : {{searchingBy}}</h3>
+        </div>
+    </div>
+    <hr>
+    <div>
+        <input type="button" value="back" onclick="history.back()"/>
+        <input type="button" value="Export to CSV" onclick="document.location='/export?word={{searchingBy}}'"/>
+        <!-- <button onclick="document.location='/export?word={{searchingBy}}'">Export to CSV</button> -->
+    </div>
+    <br>
+
     <section>
-        <h4>Title</h4>
-        <h4>Company</h4>
-        <h4>Location</h4>
-        <h4>Link</h4>
-        {% for job in jobs %}
-            <span>{{job.title}}</span>
-            <span>{{job.company}}</span>
-            <span>{{job.location}}</span>
-            <a href="{{job.link}}" target="_blank">Apply</a>
-        {% endfor %}
+        <table id="jobs">
+            <tr>
+                <th>Title</th>
+                <th>Company</th>
+                <th>Location</th>
+                <th>Link</th>
+            </tr>
+            {% for job in jobs %}
+            <tr>
+                <td>{{job.title}}</td>
+                <td>{{job.company}}</td>
+                <td>{{job.location}}</td>
+                <td><a href="{{job.link}}" target="_blank">Detail</a></td>
+            </tr>
+            {% endfor %}
+        </table>
     </section>
 </body>
 </html>
