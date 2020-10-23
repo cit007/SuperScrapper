@@ -16,11 +16,20 @@
         <h1>Job Search</h1>
         <div>
             <form class="searchTerm" action="/report" method="get" style="margin:auto;max-width:300px">
-                <input placeholder='Job Search...' required name="word" />
-                <button><i class="fa fa-search"></i></button>
+                <input placeholder='ex) python/go' required name="word" />
+                <button onclick="srhClickFunction()"><i class="fa fa-search"></i></button>
             </form> 
         </div>
+        <div id="loading" class="loader notshowing"></div>
     </div>
+
     <img src="./static/images/bg.jpg" class="bgImage" />
+
+    <script>
+        function srhClickFunction() {
+            loadingElement = document.getElementById("loading");
+            loadingElement.classList.remove("notshowing");
+        }
+    </script>
 </body>
 </html>
