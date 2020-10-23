@@ -38,8 +38,7 @@ def extract_indeed_jobs(url, last_page):
             job_info = extract_job(page_url, job)
             # print(job_info)
             jobs_list.append(job_info)
-            break  # ---------------------------
-        break  # ---------------------------
+
     return jobs_list
 
 
