@@ -11,7 +11,7 @@
     <div class="center">
         <h2>Job Results</h2>
         <div>
-            <h3>Found <strong>{{resultNumber}}</strong> results from indeed.com | Search Keyword : {{searchingBy}}</h3>
+            <h3>Found <strong>{{resultNumber}}</strong> results from {{siteList}} | Search Keyword : {{searchingBy}}</h3>
         </div>
     </div>
     <hr>
@@ -25,6 +25,7 @@
     <section>
         <table id="jobs">
             <tr>
+                <th>Site</th>
                 <th>Title</th>
                 <th>Company</th>
                 <th>Location</th>
@@ -32,6 +33,7 @@
             </tr>
             {% for job in jobs %}
             <tr>
+                <td>{{job.site}}</td>
                 <td>{{job.title}}</td>
                 <td>{{job.company}}</td>
                 <td>{{job.location}}</td>

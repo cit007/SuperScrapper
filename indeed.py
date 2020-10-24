@@ -65,7 +65,7 @@ def extract_job(page_url, job_html):
     # detail_page = f"{page_url}&vjk={job_id}"
     detail_page = f"https://www.indeed.com/viewjob?jk={job_id}"
 
-    return {"title": title, "company": company, "location": location, "link": detail_page}
+    return {"site": "indeed", "title": title, "company": company, "location": location, "link": detail_page}
 
 
 def get_jobs(search_word):

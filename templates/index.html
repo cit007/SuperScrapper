@@ -18,6 +18,13 @@
             <form class="searchTerm" action="/report" method="get" style="margin:auto;max-width:300px">
                 <input placeholder='ex) python/go' required name="word" />
                 <button onclick="srhClickFunction()"><i class="fa fa-search"></i></button>
+                <div>
+                    {% for site in site_list %}
+                        <input type="checkbox" id={{site}} name={{site}} value="on">
+                        <label for="{{site}}"> {{site}}</label>
+                    {% endfor %}
+                </div>     
+                <br>
             </form> 
         </div>
         <div id="loading" class="loader notshowing"></div>
