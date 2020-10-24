@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, send_file, send_from_directory
-from scrapper import get_jobs
+from indeed import get_jobs
 from exporter import save_to_file
 import os
 
