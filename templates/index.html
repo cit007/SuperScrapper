@@ -5,6 +5,7 @@
     <title>Job Search</title>
 
     <link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/custom_style.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,13 +17,27 @@
         <h1>Job Search</h1>
         <div>
             <form class="searchTerm" action="/report" method="get" style="margin:auto;max-width:300px">
-                <input placeholder='ex) python/go' required name="word" />
+                <input size="30" placeholder='ex) java | python' required name="word" />
                 <button onclick="srhClickFunction()"><i class="fa fa-search"></i></button>
-                <div>
+                <br><br>
+                <div class="max-page">
+                    <label for="tentacles">Maximum Scraping Page (3-100):</label>
+                    <input type="number" id="tentacles" name="maximum" value="3" min="3" max="100">
+                    <div class="popup" onclick="showPopupPageSizeFunction()">
+                        <i class="material-icons">help</i>
+                        <span class="popuptext" id="pageSizeId">Please set the maximum scraping page-size. it takes long time to complete scraping site.</span>
+                    </div>
+                </div>
+                <div class="select-site">
+                    <label>Select Site:</label>
                     {% for site in site_list %}
                         <input type="checkbox" id={{site}} name={{site}} value="on">
                         <label for="{{site}}"> {{site}}</label>
                     {% endfor %}
+                    <div class="popup" onclick="showPopupSelSiteFunction()">
+                        <i class="material-icons">help</i>
+                        <span class="popuptext" id="selSiteId">Please select the checkbox to search site</span>
+                    </div>
                 </div>     
                 <br>
             </form> 
@@ -36,6 +51,14 @@
         function srhClickFunction() {
             loadingElement = document.getElementById("loading");
             loadingElement.classList.remove("notshowing");
+        }
+        function showPopupPageSizeFunction() {
+            var popup = document.getElementById("pageSizeId");
+            popup.classList.toggle("show");
+        }
+        function showPopupSelSiteFunction() {
+            var popup = document.getElementById("selSiteId");
+            popup.classList.toggle("show");
         }
     </script>
 </body>

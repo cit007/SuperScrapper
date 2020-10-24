@@ -11,13 +11,13 @@
     <div class="center">
         <h2>Job Results</h2>
         <div>
-            <h3>Found <strong>{{resultNumber}}</strong> results from {{siteList}} | Search Keyword : {{searchingBy}}</h3>
+            <h3>Found <strong>{{resultNumber}}</strong> results from {{siteList}} | Search Keyword : [{{searchingBy}}]</h3>
         </div>
     </div>
     <hr>
     <div>
         <input type="button" value="back" onclick="history.back()"/>
-        <input type="button" value="Export to CSV" onclick="document.location='/export?word={{searchingBy}}'"/>
+        <input type="button" value="Export to CSV" onclick="document.location='/export?word={{searchingBy}}{{exportParam}}'"/>
         <!-- <button onclick="document.location='/export?word={{searchingBy}}'">Export to CSV</button> -->
     </div>
     <br>

@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+from config import config
 
 LIMIT = 50
 
@@ -71,5 +72,10 @@ def extract_job(page_url, job_html):
 def get_jobs(search_word):
     indeed_url = f"https://www.indeed.com/jobs?q={search_word}&limit={LIMIT}"
     last_indeed_page = extract_indeed_pages(indeed_url)
+
+    # @TODO too big data...so limit maximum page for @TEST
+    if last_indeed_page > int(config.max):
+        last_indeed_page = int(config.max)
+
     indeed_jobs = extract_indeed_jobs(indeed_url, last_indeed_page)
     return indeed_jobs

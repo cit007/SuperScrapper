@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, send_file, send_fro
 from indeed import get_jobs as indeed_get_jobs
 from stackoverflow import get_jobs as stackoverflow_get_jobs
 from exporter import save_to_file
+from config import config
 import os
 
 app = Flask("SuperScrapper")
@@ -21,15 +22,19 @@ def report():
     word = ""
     checked_list = []
     total_jobs = []
-    site_len = len(site_list)
-    print(request.args, site_len)
-    for arg in request.args:
-        if arg == "word":
-            word = request.args.get("word")
-            for i, site in enumerate(site_list):
-                print(i, site, request.args.get(site))
-                if "on" == request.args.get(site):
-                    checked_list.append(site_list[i])
+    export_param = ""
+
+    word = request.args.get("word")
+    maxPage = request.args.get("maximum")
+
+    # ----- set maximum page of config from input-------
+    config.max = maxPage
+    print(f"input maximum page ..... {config.max}")
+
+    for i, site in enumerate(site_list):
+        print(i, site, request.args.get(site))
+        if "on" == request.args.get(site):
+            checked_list.append(site_list[i])
 
     print(checked_list)
 
@@ -53,24 +58,41 @@ def report():
             total_jobs += jobs
             # print(total_jobs)
 
+        for checked in checked_list:
+            export_param += f"&{checked}=on"
+            print(export_param)
+
     else:
         return redirect("/")
     return render_template(
-        "report.html", searchingBy=word, resultNumber=len(total_jobs), jobs=total_jobs, siteList=checked_list)
+        "report.html", searchingBy=word, resultNumber=len(total_jobs), jobs=total_jobs, siteList=checked_list, exportParam=export_param)
 
 
 @app.route("/export")
 def export():
     try:
+        checked_list = []
+        total_jobs = []
+
+        print(f"export.....{request.args}")
         word = request.args.get("word")
-        print(word)
         if not word:
             print(f"not exist word: {word}")
             raise Exception()
 
-        word = word.lower()
-        jobs = db.get(word)
-        if not jobs:
+        for i, site in enumerate(site_list):
+            print(i, site, request.args.get(site))
+            if "on" == request.args.get(site):
+                checked_list.append(site_list[i])
+
+        for checked in checked_list:
+            word = word.lower()
+            word_key = f"{checked}:{word}"
+            jobs = db.get(word_key)
+
+            total_jobs += jobs
+
+        if not total_jobs:
             print("##### NOT EXIST JOB INFO FOR EXPORT #####")
             raise Exception()
         else:
@@ -79,9 +101,9 @@ def export():
             file_full_path = os.path.join(filepath, filename)
 
             # save file
-            save_to_file(file_full_path, jobs)
+            save_to_file(file_full_path, total_jobs)
 
-            print(file_full_path)
+            # print(file_full_path)
             return send_file(file_full_path, as_attachment=True)
             # return send_from_directory(filepath, filename, as_attachment=True)
 

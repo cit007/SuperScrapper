@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+from config import config
 
 
 def get_last_page(so_url):
@@ -61,5 +62,10 @@ def extract_job(job_html):
 def get_jobs(search_word):
     url = f"https://stackoverflow.com/jobs?q={search_word}"
     last_page = get_last_page(url)
+
+    # @TODO too big data...so limit maximum page for @TEST
+    if last_page > int(config.max):
+        last_page = int(config.max)
+
     jobs_list = extract_jobs(url, last_page)
     return jobs_list
