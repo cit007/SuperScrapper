@@ -41,7 +41,8 @@ def report():
     if word:
         for checked in checked_list:
             word = word.lower()
-            word_key = f"{checked}:{word}"
+
+            word_key = f"{checked}:{word}:{maxPage}"
             fromDb = db.get(word_key)
             if fromDb:
                 jobs = fromDb
@@ -60,7 +61,8 @@ def report():
 
         for checked in checked_list:
             export_param += f"&{checked}=on"
-            print(export_param)
+        export_param += f"&maximum={maxPage}"
+        print(export_param)
 
     else:
         return redirect("/")
@@ -76,6 +78,7 @@ def export():
 
         print(f"export.....{request.args}")
         word = request.args.get("word")
+        maxPage = request.args.get("maximum")
         if not word:
             print(f"not exist word: {word}")
             raise Exception()
@@ -87,7 +90,7 @@ def export():
 
         for checked in checked_list:
             word = word.lower()
-            word_key = f"{checked}:{word}"
+            word_key = f"{checked}:{word}:{maxPage}"
             jobs = db.get(word_key)
 
             total_jobs += jobs
