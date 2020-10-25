@@ -4,7 +4,7 @@
 # Introduction - the project's aim
  This program search jobs(indeed or stackoverflow) with user input\
  and show the scraping results as summary table.\
- You can download the summary as a csv file.\
+ You can download the summary as a csv file.
  
 # Technologies
  * Scraping : Beautifulsoup4
